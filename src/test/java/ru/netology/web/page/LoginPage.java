@@ -32,6 +32,4 @@ public class LoginPage
         errorNotification.shouldBe(visible);
         return errorNotification.isDisplayed();
     }
-
-
 }
