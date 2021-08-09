@@ -10,29 +10,31 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class LoginTest
 {
-    LoginPage loginPage = open("http://localhost:9999", LoginPage.class);
+    LoginPage loginPage;
+
+    @BeforeEach
+    void truncate() {
+        DataHelper.truncateAuthCode();
+        loginPage = open("http://localhost:9999", LoginPage.class);
+    }
 
     @AfterEach
     void tearDown() { closeWebDriver(); }
 
-    @Test
-    void testGetCode() {
-        System.out.println(DataHelper.getVerificationCodeFor(DataHelper.getAuthInfo()));
-    }
-
-    //@RepeatedTest(10)
-    @Test
-    void shouldWork() {
+    @RepeatedTest(5)
+    void shouldWork(RepetitionInfo repetitionInfo) throws InterruptedException {
         var user = DataHelper.getAuthInfo();
         var verificationPage = loginPage.validLogin(user);
+        Thread.sleep(5_000);
         var dashboardPage = verificationPage.validVerify(DataHelper.getVerificationCodeFor(user));
         dashboardPage.isOpen();
     }
 
     @Test
-    void shouldBeNotificationBadCode() {
+    void shouldBeNotificationBadCode() throws InterruptedException {
         var user = DataHelper.getAuthInfo();
         var verificationPage = loginPage.validLogin(user);
+        Thread.sleep(5_000);
         verificationPage.invalidVerify(DataHelper.getInvalidVerificationCodeFor(user));
     }
 

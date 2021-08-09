@@ -46,7 +46,7 @@ public class DataHelper
         // заведомо неверный код: верный + 1
         String code = getVerificationCodeFromDb(authInfo.login);
         int iCode = Integer.valueOf(code);
-        code = String.valueOf(iCode + 1).substring(0, 6); // 999999 + 1 = 000000
+        code = String.valueOf(iCode + 1).substring(0, 6); // 999_999 + 1 = 100_000
         return new VerificationCode(code);
     }
 
@@ -56,7 +56,6 @@ public class DataHelper
                 "SELECT ac.code"
                 + "  FROM auth_codes ac, users u"
                 + " WHERE ac.user_id = u.id and u.login=?"
-//                + " ORDER BY ac.created"
                 + " ORDER BY ac.created DESC"
                 + " LIMIT 1"
                 ;
@@ -68,13 +67,22 @@ public class DataHelper
             var rs = dataStmt.executeQuery();
             rs.next();
             code = rs.getString(1);
-//            while(rs.next()) code = rs.getString("ac.code");
             rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("getVerificationCodeFromDb:" + code);
         return code;
+    }
+
+    public static void truncateAuthCode() {
+        try(
+            var conn = DriverManager.getConnection(dbUrl, "app", "pass");
+            var dataStmt = conn.createStatement();
+        ){
+            dataStmt.execute("TRUNCATE auth_codes");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
