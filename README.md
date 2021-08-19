@@ -3,5 +3,4 @@ AQA-19
 
 Задача №1 - Скоро deadline  
 
-![t1 Test results](https://user-images.githubusercontent.com/48862268/128681829-3c6f3123-fcce-42ec-bd1e-639c0338b5eb.png)
-
+![Test results - LoginTest — Яндекс Браузер 2021-08-](https://user-images.githubusercontent.com/48862268/130069776-c0273d40-8182-407a-90f3-15aadc09266e.png)
