@@ -6,7 +6,6 @@ import ru.netology.web.page.LoginPage;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class LoginTest
 {
@@ -40,10 +39,15 @@ class LoginTest
 
     @Test
     void shouldBeErrorIfInvalidAuth() {
-        assertTrue(loginPage.invalidLogin(
+        loginPage.invalidLogin(
                 DataHelper.getInvalidAuthInfo().getLogin(),
                 DataHelper.getInvalidAuthInfo().getPassword()
-        ));
+        );
+    }
+
+    @Test
+    void shouldBeBlockedIfTripleInvalidAuth() {
+        loginPage.blockedLogin(DataHelper.getAuthInfo().getLogin());
     }
 
 }

@@ -1,10 +1,11 @@
 package ru.netology.web.page;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.support.FindBy;
 import ru.netology.web.data.DataHelper;
 
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.page;
 
 public class LoginPage
@@ -25,11 +26,25 @@ public class LoginPage
         return page(VerificationPage.class);
     }
 
-    public boolean invalidLogin(String login, String password) {
+    public void invalidLogin(String login, String password) {
         loginField.setValue(login);
         passwordField.setValue(password);
         loginButton.click();
-        errorNotification.shouldBe(visible);
-        return errorNotification.isDisplayed();
+        errorNotification.shouldBe(visible).shouldHave(text("Ошибка! Неверно указан логин или пароль"));
     }
+
+    public void blockedLogin(String login) {
+        loginField.setValue(login);
+        passwordField.setValue("1");
+        loginButton.click();
+        errorNotification.shouldBe(visible).shouldHave(text("Ошибка! Неверно указан логин или пароль"));
+        passwordField.setValue("2");
+        loginButton.click();
+        errorNotification.shouldBe(visible).shouldHave(text("Ошибка! Неверно указан логин или пароль"));
+        passwordField.setValue("3");
+        loginButton.click();
+        errorNotification.shouldBe(visible).shouldHave(text("Ошибка! Неверно указан логин или пароль"));
+        loginButton.shouldBe(disabled);
+    }
+
 }
