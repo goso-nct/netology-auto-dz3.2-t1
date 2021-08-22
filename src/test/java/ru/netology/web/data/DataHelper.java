@@ -34,6 +34,9 @@ public class DataHelper
     public static AuthInfo getInvalidAuthInfo() {
         return new AuthInfo("mumu", "mumu");
     }
+    public static AuthInfo getAuthInfoWithInvalidPass() {
+        return new AuthInfo("vasya", "mumu");
+    }
 
     @Value
     public static class VerificationCode {

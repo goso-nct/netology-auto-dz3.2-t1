@@ -26,24 +26,14 @@ public class LoginPage
         return page(VerificationPage.class);
     }
 
-    public void invalidLogin(String login, String password) {
-        loginField.setValue(login);
-        passwordField.setValue(password);
+    public void invalidLogin(DataHelper.AuthInfo ai) {
+        loginField.setValue(ai.getLogin());
+        passwordField.setValue(ai.getPassword());
         loginButton.click();
         errorNotification.shouldBe(visible).shouldHave(text("Ошибка! Неверно указан логин или пароль"));
     }
 
-    public void blockedLogin(String login) {
-        loginField.setValue(login);
-        passwordField.setValue("1");
-        loginButton.click();
-        errorNotification.shouldBe(visible).shouldHave(text("Ошибка! Неверно указан логин или пароль"));
-        passwordField.setValue("2");
-        loginButton.click();
-        errorNotification.shouldBe(visible).shouldHave(text("Ошибка! Неверно указан логин или пароль"));
-        passwordField.setValue("3");
-        loginButton.click();
-        errorNotification.shouldBe(visible).shouldHave(text("Ошибка! Неверно указан логин или пароль"));
+    public void shouldBeBlockedLogin() {
         loginButton.shouldBe(disabled);
     }
 
