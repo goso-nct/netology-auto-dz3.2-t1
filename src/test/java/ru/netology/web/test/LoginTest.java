@@ -49,7 +49,7 @@ class LoginTest
         loginPage.invalidLogin(DataHelper.getAuthInfoWithInvalidPass());
         loginPage.invalidLogin(DataHelper.getAuthInfoWithInvalidPass());
         loginPage.invalidLogin(DataHelper.getAuthInfoWithInvalidPass());
-        loginPage.shouldBeBlockedLogin();
+        loginPage.shouldBeBlocked();
     }
 
 }

@@ -2,6 +2,7 @@ package ru.netology.web.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.FindBy;
 import ru.netology.web.data.DataHelper;
 
@@ -27,13 +28,15 @@ public class LoginPage
     }
 
     public void invalidLogin(DataHelper.AuthInfo ai) {
+        loginField.doubleClick().sendKeys(Keys.DELETE);
         loginField.setValue(ai.getLogin());
+        passwordField.doubleClick().sendKeys(Keys.DELETE);
         passwordField.setValue(ai.getPassword());
         loginButton.click();
         errorNotification.shouldBe(visible).shouldHave(text("Ошибка! Неверно указан логин или пароль"));
     }
 
-    public void shouldBeBlockedLogin() {
+    public void shouldBeBlocked() {
         loginButton.shouldBe(disabled);
     }
 
