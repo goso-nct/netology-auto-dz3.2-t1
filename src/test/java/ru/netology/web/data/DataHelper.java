@@ -88,6 +88,20 @@ public class DataHelper
         }
     }
 
+    public static void deleteDbData() {
+        try(
+            var conn = DriverManager.getConnection(dbUrl, "app", "pass");
+            var dataStmt = conn.createStatement();
+        ){
+            dataStmt.execute("TRUNCATE card_transactions");
+            dataStmt.execute("TRUNCATE cards");
+            dataStmt.execute("TRUNCATE auth_codes");
+            dataStmt.execute("DELETE FROM users");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 

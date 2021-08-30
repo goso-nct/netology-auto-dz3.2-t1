@@ -1,1 +1,0 @@
-java -jar ./artifacts/app-deadline.jar
